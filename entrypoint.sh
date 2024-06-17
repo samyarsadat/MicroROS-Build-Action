@@ -20,20 +20,20 @@ set -e
 export ROS_DISTRO="humble"
 
 # Get arguments
-MICROROS_DIR_PATH=$1
-MICROROS_SRC_PATH=$2
-MICROROS_SETUP_PATH=$3
-ENV_SETUP_SCRIPT=$4
-MICROROS_DO_CLONE=$5
-COLCON_META_NAME=$6
-TOOLCHAIN_CMAKE_NAME=$7
-EXTRA_BUILD_PACKAGES=$8
+MICROROS_DIR_PATH="$1"
+MICROROS_SRC_PATH="$2"
+MICROROS_SETUP_PATH="$3"
+ENV_SETUP_SCRIPT="$4"
+MICROROS_DO_CLONE="$5"
+COLCON_META_NAME="$6"
+TOOLCHAIN_CMAKE_NAME="$7"
+EXTRA_BUILD_PACKAGES="$8"
 
 # Split package names into array
 IFS=" " read -r -a EXTRA_BUILD_PACKAGES <<< "$EXTRA_BUILD_PACKAGES"
 
 # Make paths absolute
-RELATIVE_MICROROS_DIR_PATH=$MICROROS_DIR_PATH
+RELATIVE_MICROROS_DIR_PATH="$MICROROS_DIR_PATH"
 MICROROS_DIR_PATH="$GITHUB_WORKSPACE/$MICROROS_DIR_PATH"
 MICROROS_SRC_PATH="$MICROROS_DIR_PATH/$MICROROS_SRC_PATH"
 MICROROS_SETUP_PATH="$MICROROS_SRC_PATH/$MICROROS_SETUP_PATH"
@@ -74,7 +74,7 @@ check_file_exists "$MICROROS_DIR_PATH/$COLCON_META_NAME"
 if [ -n "$ENV_SETUP_SCRIPT" ]; then
     check_file_exists "$ENV_SETUP_SCRIPT"
     echo "Running provided environment setup script..."
-    source $ENV_SETUP_SCRIPT
+    source "$ENV_SETUP_SCRIPT"
 else 
     echo "No environment setup script provided."
     echo "Using default RP2040 setup..."
@@ -82,7 +82,7 @@ else
     source /rp2040_env_setup.sh
 fi
 
-cd $GITHUB_WORKSPACE
+cd "$GITHUB_WORKSPACE"
 
 # Echo arguments
 echo "Configuration:"
@@ -98,32 +98,32 @@ echo "ROS_DISTRO=$ROS_DISTRO"
 
 # Install MicroROS tools
 echo "Running tools setup script..."
-export MICROROS_DIR_PATH=$MICROROS_DIR_PATH
-export MICROROS_SRC_PATH=$MICROROS_SRC_PATH
-export MICROROS_SETUP_PATH=$MICROROS_SETUP_PATH
-export MICROROS_DO_CLONE=$MICROROS_DO_CLONE
+export MICROROS_DIR_PATH="$MICROROS_DIR_PATH"
+export MICROROS_SRC_PATH="$MICROROS_SRC_PATH"
+export MICROROS_SETUP_PATH="$MICROROS_SETUP_PATH"
+export MICROROS_DO_CLONE="$MICROROS_DO_CLONE"
 /install_tools.sh
 source /opt/ros/$ROS_DISTRO/setup.bash
 
 # Build MicroROS and extra packages
-cd $MICROROS_DIR_PATH
+cd "$MICROROS_DIR_PATH"
 echo "Removing directories..."
 rm -rf ./build && rm -rf ./firmware && rm -rf ./install && rm -rf ./log
 
 for package in "${EXTRA_BUILD_PACKAGES[@]}"; do
     echo "Building extra package: $package..."
-    colcon build --packages-select $package
+    colcon build --packages-select "$package"
 done
 
 source install/local_setup.bash
-source $MICROROS_SETUP_PATH/install/local_setup.bash
+source "$MICROROS_SETUP_PATH/install/local_setup.bash"
 
 sudo apt-get update
 ros2 run micro_ros_setup create_firmware_ws.sh generate_lib
 
 for package in "${EXTRA_BUILD_PACKAGES[@]}"; do
     echo "Running workspace creation script for package: $package..."
-    ros2 run $package create_firmware_ws.sh
+    ros2 run "$package" create_firmware_ws.sh
 done
 
 ros2 run micro_ros_setup build_firmware.sh "$MICROROS_DIR_PATH/$TOOLCHAIN_CMAKE_NAME" "$MICROROS_DIR_PATH/$COLCON_META_NAME"

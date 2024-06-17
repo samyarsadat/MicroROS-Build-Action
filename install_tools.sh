@@ -22,19 +22,19 @@ set -e
 echo "Installing MicroROS tools..."
 sudo apt-get update
 rosdep update
-cd $MICROROS_DIR_PATH \
-&& sudo rosdep install --rosdistro $ROS_DISTRO --from-paths $MICROROS_SRC_PATH --ignore-src -y
+cd "$MICROROS_DIR_PATH" \
+&& sudo rosdep install --rosdistro $ROS_DISTRO --from-paths "$MICROROS_SRC_PATH" --ignore-src -y
 sudo apt-get autoremove && sudo apt-get autoclean
 echo "Tools installed!"
 
 # Clone MicroROS setup if the user has not provided a setup repository
 if [ "$MICROROS_DO_CLONE" = "true" ]; then
     echo "MicroROS setup not provided, cloning MicroROS setup..."
-    rm -rf $MICROROS_SETUP_PATH
-    git clone --recurse-submodules --branch $ROS_DISTRO https://github.com/micro-ROS/micro_ros_setup.git $MICROROS_SETUP_PATH
+    rm -rf "$MICROROS_SETUP_PATH"
+    git clone --recurse-submodules --branch $ROS_DISTRO https://github.com/micro-ROS/micro_ros_setup.git "$MICROROS_SETUP_PATH"
 fi
 
 # Build MicroROS setup
 echo "Building MicroROS setup..."
 source /opt/ros/$ROS_DISTRO/setup.bash \
-&& cd $MICROROS_SETUP_PATH && colcon build
+&& cd "$MICROROS_SETUP_PATH" && colcon build
