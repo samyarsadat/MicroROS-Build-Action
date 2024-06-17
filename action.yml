@@ -1,0 +1,74 @@
+#  MicroROS Build Action - Action Metadata.
+#  Copyright 2024 Samyar Sadat Akhavi
+#  Written by Samyar Sadat Akhavi, 2024.
+#
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <https: www.gnu.org/licenses/>.
+
+name: "MicroROS Build Action"
+description: "Action for building micro-ROS as a static C library."
+author: "Samyar Sadat Akhavi <samyarsadat@gigawhat.net>"
+
+branding:
+    color: "blue"
+    icon: "package"
+
+inputs:
+    microros_dir:
+        description: "Micro-ROS directory. This directory should contain the source directory, the my_colcon.meta, and my_toolchain.cmake files."
+        required: true
+    microros_source_dir:
+        description: "Micro-ROS source directory. The path should be relative to the micro-ROS directory. This directory should contain the micro-ROS setup repository and any extra packages that micro-ROS should be built with. Default is 'src'."
+        required: false
+        default: "src"
+    microros_setup_path:
+        description: "Path to the micro-ROS setup repository. The path should be relative to the micro-ROS source directory. Default is 'micro_ros_setup'."
+        required: false
+        default: "micro_ros_setup"
+    environment_setup_script:
+        description: "Path to evironment setup script. This script should perform any steps required to set up the environment for building micro-ROS for your specific platform. The default script is set-up for the RP2040."
+        required: false
+        default: ""
+    clone_microros_setup:
+        description: "Whether to clone the micro-ROS setup repository. Default is 'true'. Set to 'false' if the repository is added as a submodule or otherwise exists at the provided path."
+        required: true
+        default: "true"
+    colcon_meta_file:
+        description: "Name of the colcon.meta file. This file should be in the micro-ROS directory. Default is 'my_colcon.meta'."
+        required: false
+        default: "my_colcon.meta"
+    toolchain_cmake_file:
+        description: "Name of the toolchain file. This file should be in the micro-ROS directory. Default is 'my_toolchain.cmake'."
+        required: false
+        default: "my_toolchain.cmake"
+    extra_build_packages:
+        description: "A space-separated list of packages that are to be built with the library. These packages should be in the micro-ROS source directory. The packages should be in a directory with the same name as the package."
+        required: false
+        default: ""
+
+outputs:
+    library_build_dir:
+        description: "Relative path to the build directory. The libmicroros.a file and the include directory will be in this directory."
+
+runs:
+    using: "docker"
+    image: "Dockerfile"
+    args:
+        - ${{ inputs.microros_dir }}
+        - ${{ inputs.microros_source_dir }}
+        - ${{ inputs.microros_setup_path }}
+        - ${{ inputs.environment_setup_script }}
+        - ${{ inputs.clone_microros_setup }}
+        - ${{ inputs.colcon_meta_file }}
+        - ${{ inputs.toolchain_cmake_file }}
+        - ${{ inputs.extra_build_packages }}
