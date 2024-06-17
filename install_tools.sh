@@ -22,8 +22,8 @@ set -e
 echo "Installing MicroROS tools..."
 sudo apt-get update
 rosdep update
-cd "$MICROROS_DIR_PATH" \
-&& sudo rosdep install --rosdistro $ROS_DISTRO --from-paths "$MICROROS_SRC_PATH" --ignore-src -y
+cd "$MICROROS_DIR_PATH"
+sudo rosdep install --rosdistro $ROS_DISTRO --from-paths "$MICROROS_SRC_PATH" --ignore-src -y
 sudo apt-get autoremove && sudo apt-get autoclean
 echo "Tools installed!"
 
@@ -36,5 +36,5 @@ fi
 
 # Build MicroROS setup
 echo "Building MicroROS setup..."
-source /opt/ros/$ROS_DISTRO/setup.bash \
-&& cd "$MICROROS_SETUP_PATH" && colcon build
+source /opt/ros/$ROS_DISTRO/setup.bash
+cd "$MICROROS_SETUP_PATH" && colcon build
