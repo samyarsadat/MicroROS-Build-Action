@@ -15,13 +15,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https: www.gnu.org/licenses/>.
 
-FROM ros:humble
-
-# Install git, nano, pip, and curl
-RUN apt-get update \
-    && apt-get install -y git nano curl python3-pip \
-    && apt-get install -y cmake gcc g++ \
-    && rm -rf /var/lib/apt/lists/* && apt-get autoremove && apt-get autoclean
+FROM samyarsadat/service_images:microros-build-action-latest
 
 # Copy the entrypoint and other scripts
 COPY entrypoint.sh /entrypoint.sh
