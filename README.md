@@ -69,6 +69,14 @@ instead of taking the path as an input. I have not tested whether spaces in `mic
 it's a good idea to avoid spaces in paths altogether.<br>
 <br>
 
+### The Firmware Workspace Creation Script
+If you have any extra packages that get built alongside micro-ROS, those packages need to have a firmware workspace creation script located at 
+`[PACKAGE DIR]/scripts/create_firmware_ws.sh`. This script is executed before building the package. The build will fail if this script is not
+found. You can see a generic example of such a script
+[here](https://github.com/samyarsadat/ROS-Robot/blob/stage-1-pico-rtos/Source%20Code/pico_ws/libmicroros/src/rrp_pico_coms/scripts/create_firmware_ws.sh).
+This script should be fine for most packages.<br>
+<br><br>
+
 
 ## Example usage
 ```YAML
