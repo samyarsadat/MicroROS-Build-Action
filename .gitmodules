@@ -1,6 +1,0 @@
-[submodule "FreeRTOS Kernel"]
-	path = test_library/libfreertos/FreeRTOS-Kernel
-	url = https://github.com/FreeRTOS/FreeRTOS-Kernel
-[submodule "FreeRTOS POSIX Extension"]
-	path = test_library/libfreertos/FreeRTOS-POSIX
-	url = https://github.com/FreeRTOS/Lab-Project-FreeRTOS-POSIX
