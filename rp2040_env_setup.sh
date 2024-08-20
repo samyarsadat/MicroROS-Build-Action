@@ -33,3 +33,4 @@ mkdir /pico && cd /pico \
 
 # Set Pico SDK path
 export PICO_SDK_PATH="/pico/pico-sdk"
+export PICO_COMPILER="pico_arm_gcc"
