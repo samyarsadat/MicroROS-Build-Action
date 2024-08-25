@@ -27,7 +27,7 @@ apt-get update \
 
 # "Install" the Pico SDK
 mkdir /pico && cd /pico \
-&& git clone https://github.com/raspberrypi/pico-sdk.git --branch master \
+&& git clone https://github.com/raspberrypi/pico-sdk.git --branch "1.5.1" \
 && cd pico-sdk \
 && git submodule update --init
 
