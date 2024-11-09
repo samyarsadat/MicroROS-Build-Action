@@ -43,7 +43,7 @@ This is a Docker container action.
 Some extra notes on configuration and usage.
 
 ### The Environment Setup Script
-The environment setup script, as described above, should setup the environment for building micro-ROS for the specific that you're building micro-ROS for.<br>
+The environment setup script, as described above, should setup the environment for building micro-ROS for the platform that you're targetting.<br>
 This may include installing compilers, SDKs, toolchains, setting environment variables, etc. An example of such a file can be found in the form of the default
 setup script for the RP2040 _(see [rp2040_env_setup.sh](rp2040_env_setup.sh))_. This script installs the Pico SDK, along with all other required dependencies.<br>
 <br>
@@ -73,7 +73,7 @@ it's a good idea to avoid spaces in paths altogether.<br>
 If you have any extra packages that get built alongside micro-ROS, those packages need to have a firmware workspace creation script located at 
 `[PACKAGE DIR]/scripts/create_firmware_ws.sh`. This script is executed before building micro-ROS. The build will fail if this script is not found.
 You can see a generic example of such a script
-[here](https://github.com/samyarsadat/ROS-Robot/blob/stage-1-pico-rtos/Source%20Code/pico_ws/libmicroros/src/rrp_pico_coms/scripts/create_firmware_ws.sh).
+[here](https://github.com/samyarsadat/ROS-Robot/blob/stage-1/source_code/pico_ws/libmicroros/src/rrp_pico_coms/scripts/create_firmware_ws.sh).
 This script should be fine for most packages.<br>
 <br><br>
 
