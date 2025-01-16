@@ -95,7 +95,7 @@ jobs:
 
             - name: Build MicroROS Library
               id: build
-              uses: ./
+              uses: samyarsadat/MicroROS-Build-Action@v1
               with:
                   microros_dir: test_library/libmicroros
                   clone_microros_setup: "true"
