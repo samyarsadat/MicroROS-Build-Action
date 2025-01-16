@@ -15,7 +15,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https: www.gnu.org/licenses/>.
 
-FROM samyarsadat/service_images:microros-build-action-latest
+FROM samyarsadat/service_images:microros-build-action-jazzy
 
 # Copy the entrypoint and other scripts
 COPY entrypoint.sh /entrypoint.sh
