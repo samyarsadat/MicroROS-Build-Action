@@ -114,7 +114,10 @@ for package in "${EXTRA_BUILD_PACKAGES[@]}"; do
     colcon build --packages-select "$package"
 done
 
-source install/local_setup.bash
+if [ ${#EXTRA_BUILD_PACKAGES[@]} -gt 0 ]; then
+    source install/local_setup.bash
+fi
+
 source "$MICROROS_SETUP_PATH/install/local_setup.bash"
 
 sudo apt-get update
